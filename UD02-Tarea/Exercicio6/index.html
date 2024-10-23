@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Múltiplos Comúns con Banco de Probas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 50px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        #result, #tests {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            max-width: 600px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Múltiplos Comúns de 45, 60 e 70 entre 50000 e 55000</h1>
+    <div id="result"></div>
+
+    <h2>Banco de Probas</h2>
+    <div id="tests"></div>
+
+    <script>
+        // Función para calcular el MCM (Mínimo Común Múltiplo)
+        function calcularMCM(a, b) {
+          let maior;
+          let menor;
+            if (a<b){
+            maior = a; menor = b;
+          }else {
+            maior = b; menor = a;
+          }
+          let mcm = maior;
+
+          while (mcm%menor !== 0) {
+            mcm = mcm+maior;
+                    
+          }
+          
+          return mcm;
+
+        }
+
+        // Función para buscar múltiplos comunes en un rango
+        function buscarMultiplosComunes(mcm, inicio, fin) {
+            let resultado = [];
+            
+            for (let i=inicio; i<=fin; i++) {
+                if (i%mcm === 0){
+                    resultado.push(i);
+                }
+    
+            }
+
+
+            return resultado;
+        }
+
+       
+
+        // Calcular el MCM de 45, 60 y 70
+        let mcm45_60 = calcularMCM(45, 60);
+        let mcm45_60_70 = calcularMCM(mcm45_60, 70);
+
+        // Buscar los múltiplos comunes entre 50000 y 55000
+        let resultadoMultiplos = buscarMultiplosComunes(mcm45_60_70, 50000, 55000);
+
+        // Mostrar los múltiplos comunes en el HTML
+        let resultDiv = document.getElementById('result');
+        if (resultadoMultiplos.length > 0) {
+            resultDiv.innerHTML = "<p>Os múltiplos comúns son:</p><ul>" + 
+                                  resultadoMultiplos.map(num => "<li>" + num + "</li> ").join('') + "</ul>";
+        } else {
+            resultDiv.innerHTML = "<p>Non hai múltiplos comúns entre 50000 e 55000.</p>";
+        }
+
+        // Ejecutar el banco de probas (tests) y mostrar los resultados
+        let testsDiv = document.getElementById('tests');
+
+
+//==================================
+// Script para automatizar probas.
+//==================================
+ // Función para ejecutar los tests y verificar resultados
+ function bancoDeProbas() {
+            let tests = [
+                { a: 12, b: 15, esperado: 60 },
+                { a: 7, b: 5, esperado: 35 },
+                { a: 8, b: 20, esperado: 40 },
+                { a: 9, b: 6, esperado: 18 },
+                { a: 45, b: 60, esperado: 180 },
+                { a: 180, b: 70, esperado: 1260 } // Test del MCM de 45, 60 y 70
+            ];
+
+            let testResults = tests.map(test => {
+                let resultado = calcularMCM(test.a, test.b);
+                return resultado === test.esperado ? 
+                    `<li>✅ Test OK: MCM(${test.a}, ${test.b}) = ${resultado}</li>` :
+                    `<li>❌ Test FALLIDO: MCM(${test.a}, ${test.b}) = ${resultado} (Esperado: ${test.esperado})</li>`;
+            });
+
+            return `<ul>${testResults.join('')}</ul>`;
+        }
+        let test = bancoDeProbas();
+        console.log(test)
+        testsDiv.innerHTML = test;
+    </script>
+</body>
+</html>
