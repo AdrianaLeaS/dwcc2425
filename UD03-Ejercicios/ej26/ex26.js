@@ -18,6 +18,7 @@ autoIncrement: true });
 // Abrir a base de datos con éxito
 request.onsuccess = function(event) {
  db = event.target.result;
+ mostrarProducto;
  // TODO: Chamade aquí á función para mostrar produtos ao cargar a
 páxina
 };
@@ -26,10 +27,8 @@ document.getElementById("produtoForm").addEventListener("submit",
 function(event) {
  event.preventDefault();
  const nome = document.getElementById("nomeProduto").value;
- const prezo =
-parseFloat(document.getElementById("prezoProduto").value);
- const cantidade =
-parseInt(document.getElementById("cantidadeProduto").value);
+ const prezo = parseFloat(document.getElementById("prezoProduto").value);
+ const cantidade = parseInt(document.getElementById("cantidadeProduto").value);
  const novoProduto = { nome, prezo, cantidade };
  engadirProduto(novoProduto);
  // Limpar o formulario
@@ -41,12 +40,39 @@ function engadirProduto(produto) {
  const request = objectStore.add(produto);
  request.onsuccess = function() {
  console.log("Produto engadido con éxito:", produto);
+    mostrarProducto;
  // TODO: Chamade aquí á función para mostrar produtos despois de engadir un novo
  };
  request.onerror = function(event) {
  console.error("Erro ao engadir o produto:", event.target.error);
  };
 }
+
 // TODO: Crear a función para mostrar todos os produtos na táboa
+function mostrarProducto (){
+    const listaProdutos = document.getElementById("listaProdutos");
+    //listaProdutos.innerHTML = "";
+
+    const transaction = db.transaction(["produtos"], "readonly");
+    const objectStore = transaction.objectStore("productos");
+
+    objectStore.openCursor().onsuccess = function(event) {
+        const cursor = event.target.result;
+        if(cursor) {
+            const li = document.createElement("li");
+            li.id = "nomeProduto";
+            li.textContent = cursor.value.description;
+            listaProdutos.appendChild(li);
+            cursor.continue();
+            
+        }else {
+            console.log("Productos mostrados.");
+        }
+    };
+}
+
 // TODO: Crear a función para eliminar un produto por ID
+
+
+
 // TODO: Crear a función para editar un produto por ID
