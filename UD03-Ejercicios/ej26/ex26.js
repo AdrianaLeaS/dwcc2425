@@ -3,8 +3,7 @@ let db;
 const request = indexedDB.open("TendaDB", 1);
 // Xestionar erros ao abrir a base de datos
 request.onerror = function(event) {
- console.error("Erro ao abrir a base de datos:",
-event.target.errorCode);
+ console.error("Erro ao abrir a base de datos:", event.target.errorCode);
 };
 // Configurar o esquema da base de datos
 request.onupgradeneeded = function(event) {
@@ -18,7 +17,7 @@ autoIncrement: true });
 // Abrir a base de datos con éxito
 request.onsuccess = function(event) {
  db = event.target.result;
- mostrarProducto;
+ mostrarProducto();
  // TODO: Chamade aquí á función para mostrar produtos ao cargar a
 páxina
 };
