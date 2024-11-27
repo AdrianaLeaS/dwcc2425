@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Cliente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 300px;
+            margin: auto;
+        }
+        .formulario input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .formulario button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .formulario button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Datos do Cliente</h1>
+    <div class="formulario">
+        <label for="nome_empresa">Nome da empresa</label>
+        <input type="text" id="nome_empresa" placeholder="Nome da empresa">
+        
+        <label for="cif">CIF</label>
+        <input type="text" id="cif" placeholder="CIF">
+        
+        <label for="conta_bancaria">Conta Bancaria</label>
+        <input type="text" id="conta_bancaria" placeholder="Conta Bancaria">
+        
+        <label for="email">e-mail</label>
+        <input type="email" id="email" placeholder="e-mail">
+        
+        <label for="enderezo">Enderezo</label>
+        <input type="text" id="enderezo" placeholder="Enderezo">
+        
+        <button onclick="guardarDatos()">Gardar Datos</button>
+    </div>
+
+    <script>
+
+         // Enunciado:
+        // 1. Crear unha función chamada 'validacion' que valide os seguintes campos:
+        //    - Nome da Empresa: Só letras e espazos, entre 2 e 50 caracteres.
+        //    - CIF: Letras e números, entre 8 e 10 caracteres.
+        //    - Conta Bancaria: Letras e números, exactamente 20 caracteres.
+        //    - Email: Formato de email válido.
+        //    - Enderezo: Letras, números e algúns caracteres especiais, mínimo 3 caracteres.
+        // 2. Se algún campo non é válido, a función debe lanzar unha excepción co mensaxe correspondente.
+        // 3. Completar a función 'guardarDatos' para validar os datos e gardalos nas cookies se son válidos.
+        // 4. Engadir un bloque try-catch dentro da función 'guardarDatos' para chamar á función 'validacion' e capturar posibles excepcións.
+        //    - Se se produce unha excepción, mostrar o mensaxe de erro nunha alerta e deter a execución da función.
+
+
+
+   // Función para validar os datos
+   function validacion(nomeEmpresa, cif, contaBancaria, email, enderezo) {
+        
+        try{
+        let patronNombre = /[A-Za-z]{2,50}/; // comprobar este patron y todos porque con numeros no me da error
+        if (patronNombre.test(nomeEmpresa) == false){
+            throw new Error ("Formato de nombre incorrecto");
+        }
+
+        let patronCif = /[A-Za-z0-9]{8,10}/;
+        if (patronCif.test(cif) == false){
+            throw new Error ("Formato de CIF incorrecto");
+        }
+        
+        let patronConta = /[A-Za-z0-9]{20}/;
+        if (patronConta.test(contaBancaria) == false){
+            throw new Error ("Formato de Conta Bancaria incorrecto");
+        }
+        
+
+        let patronEmail = /[A-Za-z0-9]@[A-Za-z].[A-Za-z]/;
+        if (patronEmail.test(email) == false){
+            throw new Error ("Formato de mail incorrecto");
+        }
+        
+
+        let patronEnderezo = /[A-Za-z0-9]º-{3}/; //Son minimo tres, pero no se como ponerlo. Tampoco se como incluir los caracteres especiales
+        if (patronEnderezo.test(enderezo)== false){
+            throw new Error ("Formato de Enderezo incorrecto");
+        }
+        
+        }catch(error){
+        console.log("Error: ", error.message);
+    }
+
+       return null;
+    }
+
+
+
+        // Función para gardar os datos nas cookies
+        function guardarDatos() {
+            var nomeEmpresa = document.getElementById("nome_empresa").value;
+            var cif = document.getElementById("cif").value;
+            var contaBancaria = document.getElementById("conta_bancaria").value;
+            var email = document.getElementById("email").value;
+            var enderezo = document.getElementById("enderezo").value;
+             
+            validacion(nomeEmpresa, cif, contaBancaria, email, enderezo);
+            
+            // Gardar os datos nas cookies (expiran en 7 días)
+            //cookie => nome_empresa
+            //cookie => cif
+            //cookie => conta_bancaria
+            //cookie => email
+            //cookie => enderezo
+          
+
+            
+        }
+
+        // Función para cargar os datos das cookies automaticamente ao cargar a páxina
+        window.onload = function() {
+            var cookies = document.cookie.split(';');
+            cookies.forEach(function(cookie) {
+                var data = cookie.split('=');
+                var nome = data[0].trim();
+                var valor = data[1];
+
+                if (nome === 'nome_empresa') {
+                    document.getElementById("nome_empresa").value = valor;
+                } else if (nome === 'cif') {
+                    document.getElementById("cif").value = valor;
+                } else if (nome === 'conta_bancaria') {
+                    document.getElementById("conta_bancaria").value = valor;
+                } else if (nome === 'email') {
+                    document.getElementById("email").value = valor;
+                } else if (nome === 'enderezo') {
+                    document.getElementById("enderezo").value = valor;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
