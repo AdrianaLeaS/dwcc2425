@@ -76,37 +76,36 @@
    // Función para validar os datos
    function validacion(nomeEmpresa, cif, contaBancaria, email, enderezo) {
         
-        try{
-        let patronNombre = /[A-Za-z]{2,50}/; // comprobar este patron y todos porque con numeros no me da error
+        
+        let patronNombre = /^[A-Za-z\s]{2,50}$/;
         if (patronNombre.test(nomeEmpresa) == false){
             throw new Error ("Formato de nombre incorrecto");
         }
 
-        let patronCif = /[A-Za-z0-9]{8,10}/;
+        let patronCif = /^[A-Za-z0-9]{8,10}$/;
         if (patronCif.test(cif) == false){
             throw new Error ("Formato de CIF incorrecto");
         }
         
-        let patronConta = /[A-Za-z0-9]{20}/;
+        let patronConta = /^[A-Za-z0-9]{20}$/;
         if (patronConta.test(contaBancaria) == false){
             throw new Error ("Formato de Conta Bancaria incorrecto");
         }
         
 
-        let patronEmail = /[A-Za-z0-9]@[A-Za-z].[A-Za-z]/;
+        let patronEmail = /^[A-Za-z0-9._-]+@[A-Za-z.-]+\.[A-Za-z]{2,6}$/;
         if (patronEmail.test(email) == false){
             throw new Error ("Formato de mail incorrecto");
         }
         
 
-        let patronEnderezo = /[A-Za-z0-9]º-{3}/; //Son minimo tres, pero no se como ponerlo. Tampoco se como incluir los caracteres especiales
+        let patronEnderezo = /^[A-Za-z0-9-_.,]{3,}$/;
         if (patronEnderezo.test(enderezo)== false){
             throw new Error ("Formato de Enderezo incorrecto");
         }
         
-        }catch(error){
-        console.log("Error: ", error.message);
-    }
+       
+    
 
        return null;
     }
@@ -120,17 +119,33 @@
             var contaBancaria = document.getElementById("conta_bancaria").value;
             var email = document.getElementById("email").value;
             var enderezo = document.getElementById("enderezo").value;
-             
-            validacion(nomeEmpresa, cif, contaBancaria, email, enderezo);
+            
+            try {
+                validacion(nomeEmpresa, cif, contaBancaria, email, enderezo);
+            }catch (error) {
+                alert(`Error: ${error.message}`);
+                
+                return;
+            }
+           
+            let fecha = new Date (Date.now() + 6048e5);
+            fecha = fecha.toUTCString();
+            
+            
             
             // Gardar os datos nas cookies (expiran en 7 días)
             //cookie => nome_empresa
+            document.cookie = `nome_empresa=${nomeEmpresa}; expires =` + fecha;` path=/`;
             //cookie => cif
+            document.cookie = `cif=${cif}; expires =` + fecha;` path=/`;
             //cookie => conta_bancaria
+            document.cookie = `conta_bancaria=${contaBancaria}; expires =` + fecha;` path=/`;
             //cookie => email
+            document.cookie = `email=${email}; expires =` + fecha;` path=/`;
             //cookie => enderezo
+            document.cookie = `enderezo=${enderezo}; expires =` + fecha;` path=/`;
           
-
+           
             
         }
 
