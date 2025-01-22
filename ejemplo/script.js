@@ -17,7 +17,7 @@ const usuario = {
 };
 let {nome, idade01, pais="Desconocido"}=usuario;*/
 
-const estudante = {
+/*const estudante = {
     nome: "Alba",
     curso: "programacion",
     notas: {
@@ -43,4 +43,6 @@ let {
     }
 } = estudante;
 
-console.log (n+" "+c+" "+m+" "+l);
+console.log (n+" "+c+" "+m+" "+l);*/
+
+let n =5;

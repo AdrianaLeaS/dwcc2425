@@ -8,13 +8,13 @@ request.onerror = function(event) {
 
 
 request.onsuccess = function(event) {
-    db = event.target.result;
-    displayScores();
+   const db = event.target.result;
+    displayScores(); // La abre y muestra los datos.
 };
 
 // Crea a estrutura da base de datos se non existe
 request.onupgradeneeded = function(event) {
-    db = event.target.result;
+   const db = event.target.result;
     const objectStore = db.createObjectStore ("xogador", {keyPath: "scoreId", autoIncrement: true });
     objectStore.createIndex ("playerName", "playerName",  {unique: false });
     objectStore.createIndex ("score", "score", {unique: false });
