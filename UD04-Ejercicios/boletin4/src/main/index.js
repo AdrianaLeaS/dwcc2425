@@ -27,5 +27,5 @@ p1.modificarStock(3);
 console.log(p1);
 
 let pc1 = new ProductoConDesconto ("x", 0.1);
-let prezoFinal = ProductoConDesconto.calcularPrezoConDesconto(p1._prezo, 50);
+let prezoFinal = ProductoConDesconto.calcularPrezoConDesconto(pc1._prezo, 50);
 console.log("prezo final"+prezoFinal );
