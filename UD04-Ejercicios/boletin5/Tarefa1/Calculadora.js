@@ -1,13 +1,4 @@
 class Calculadora {
-
-    _num1;
-    _num2;
-
-    constructor (num1, num2) {
-        this._num1 = num1;
-        this._num2 = num2;
-    }
-
     sumar(a, b) {
         return a+b;
     }
@@ -20,8 +11,8 @@ class Calculadora {
         return a*b;
     }
 
-    dividir (a, b) {
-        if( b== 0){
+    dividir(a, b) {
+        if( b===0){
             throw new Error ('Non se pode dividir por cero');
         }
             return a/b;
@@ -29,3 +20,4 @@ class Calculadora {
     }
     
 }
+module.exports = Calculadora; //OJO! no es calculadora.JS!!!!
