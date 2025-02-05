@@ -1,5 +1,15 @@
 {
-    "scripts": {
+  "scripts": {
     "test": "jest"
-    }
-   }
+  },
+  "name": "xestortarefas",
+  "version": "1.0.0",
+  "main": "XestorTarefas.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

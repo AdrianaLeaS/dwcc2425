@@ -15,7 +15,7 @@ class XestorTarefas{
     }
 
     marcarComoCompletada(id){
-        this.tarefas.find(t=> t.id == id);
+        const tarefa = this.tarefas.find(t=> t.id == id);
         if(!tarefa){
             throw new Error('A tarefa non existe');
         }
