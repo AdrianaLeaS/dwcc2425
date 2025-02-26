@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="gl">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+  <title>Verificar expresiones regulares 3</title>
+</head>
+
+<body>
+  <h1>Verificar expresiones regulares 3</h1>
+
+  <div class="container">
+    <div class="row">
+      <div class="mb-3">
+        <label for="valor" class="form-label">Valor a verificar</label>
+        <input type="text" class="form-control" id="valor">
+      </div>
+
+
+      <div class="col-auto">
+        <button id="verificar" type="submit" class="btn btn-warning mb-3">Verificar</button>
+      </div>
+      <div class="col-auto">
+        <button id="estimar" type="submit" class="btn btn-info mb-3">Estimar %</button>
+      </div>
+    </div>
+   
+    <div class="container">
+      <div id="resultado" class="row">
+        Resultado:
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"></script>
+    <script type="module" src="index.js"></script>
+
+</body>
+
+</html>
