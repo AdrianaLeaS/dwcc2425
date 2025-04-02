@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+ <meta charset="UTF-8">
+ <title>Exemplo DOM</title>
+</head>
+<body>
+ <div id="contedor">
+ <p id="parrafo1">Primeiro parágrafo</p>
+ <p id="parrafo2">Segundo parágrafo</p>
+ <p id="parrafo3">Terceiro parágrafo</p>
+ </div>
+ <a id="link1" href="https://www.exemplo.com">Fai clic aquí</a>
+ <script>
+    //Problema1
+    let enlace = document.getElementById("link1");
+    enlace.setAttribute("href", "https://www.novapagina.com");
+    enlace.href = "https://www.novapagina.com";
+
+    //Problema2. SOLUCION:  y porque introduce el texto con createTextNode?
+    let contedor = document.getElementById("contedor");
+    let parrafo4 = document.createElement("p");
+    contedor.appendChild(parrafo4);
+    parrafo4.innerHTML="Benvido a miña paxina web";
+    
+    
+    //Problema3
+    console.log(document.getElementById("contedor").firstElementChild.textContent);
+    console.log(document.getElementById("contedor").lastElementChild.previousElementSibling.textContent);
+ </script>
+</body>
+</html>
