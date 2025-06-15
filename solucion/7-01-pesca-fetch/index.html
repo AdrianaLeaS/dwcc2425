@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tarefa 2</title>
+    <link
+      rel="stylesheet"
+      href="libs/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+
+    <div class="container-fluid">
+      <h1 class="m-3">Tarefa - Consulta lonxas</h1>
+
+      <form>
+        <div class="form-group row">
+          <label for="_provincia" class="col-2 col-form-label">Provincia:</label>
+          <div class="col-10">
+            <select name="_provincia" class="form-control" id="_provincia">
+              <option value="A Coruña">A Coruña</option>
+              <option value="Lugo">Lugo</option>
+              <option value="Ourense">Ourense</option>
+              <option value="Pontevedra">Pontevedra</option>
+              <option value="">Todas</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="_data" class="col-2 col-form-label">Data:</label>
+          <div class="col-10">
+            <input class="form-control" name="_data" type="date" data-date-format="YYYY-MM-DD" value="2019-01-02" id="_data">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="_grupobiologico" class="col-2 col-form-label">Grupo Biolóxico:</label>
+          <div class="col-10">
+            <select name="_grupobiologico" class="form-control" id="_grupobiologico">
+              <option value="">Todas</option>
+              <option value="Algas">Algas</option>
+              <option value="Bivalvos">Bivalvos</option>
+              <option value="Cefalópodos">Cefalópodos</option>
+              <option value="Crustáceos">Crustáceos</option>
+              <option value="Equinodermos">Equinodermos</option>
+              <option value="Gasterópodos">Gasterópodos</option>
+              <option value="Peixes">Peixes</option>
+              <option value="Poliquetos">Poliquetos</option>
+              <option value="Resto das descargas">Resto das descargas/</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="obterDatos" type="button" class="btn btn-primary m-3">Obter datos</button>
+        <button id="limpar" type="button" class="btn btn-primary m-3">Limpar</button>
+      </form>
+
+      <div id="spinner" class="spinner-border text-muted" style="display: none;"></div>
+
+      <div>
+        <span id="nomeConcello" class="well text-primary"></span><br>
+      </div>
+
+      <table id="resultado" class="table table-striped m-4"></table>
+
+      <div id="info" class="alert border rounded m-4 bg-dark text-white d-none"></div>
+
+    </div>
+
+    <script>
+      document.getElementById("obterDatos").addEventListener("click", function() {
+        solicitarDatos();
+      });
+
+      document.getElementById("limpar").addEventListener("click", function() {
+        limpar();
+      });
+
+      function solicitarDatos() {
+        var d1 = new Date();
+        document.getElementById("spinner").style.display = 'block';
+        limpar();
+        
+        let especie = "Centola";
+        let provincia = document.getElementById("_provincia").value;
+        let data = document.getElementById("_data").value;
+        let grupo = document.getElementById("_grupobiologico").value;
+
+        const url = 'filtro.php';
+        const params = new URLSearchParams({
+          _provincia: provincia,
+          _data: data,
+          _grupobiologico: grupo,
+        });
+
+        fetch(`${url}?${params.toString()}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.length > 0) {
+              mostrarDatos(data);
+            } else {
+              let resultado = `<div class="alert alert-primary col-11 " role="alert"> Non existen datos para os campos de filtrado</div>`;
+              document.getElementById("resultado").innerHTML = resultado;
+            }
+          })
+          .catch(error => {
+            mostrarErro(error);
+          })
+          .finally(() => {
+            var d2 = new Date();
+            document.getElementById("spinner").style.display = 'none';
+            document.getElementById("info").innerHTML += "<li class='text-success'> Petición Finalizada </li>";
+            document.getElementById("info").innerHTML += mostrarInfoDatas(d1, d2);
+            document.getElementById("info").classList.remove("d-none");
+          });
+      }
+
+      function mostrarErro(error) {
+        alert("Erro: " + error.message);
+      }
+
+      function filaTabla(fila) {
+        return ` <tr> 
+                    <td>${fila._data} </td> 
+                    <td> ${fila._grupobiologico}/${fila._fao}/<span class="font-weight-bold"> ${fila._especie}  </span>  </td>
+                    <td> ${fila._provincia} / ${fila._zona} /  <span class="font-weight-bold"> ${fila._lonxa}  </span>  </td>
+                    <td> ${fila._cantidad} </td> 
+                    <td> ${fila._precio} </td> 
+                    <td> ${fila._importe} </td> 
+                 </tr>`;
+      }
+
+      function limpar() {
+        document.getElementById("resultado").innerHTML = "";
+        document.getElementById("info").innerHTML = "";
+      }
+
+      function mostrarDatos(datos) {
+        let table = "<tr><th>Data</th> <th>Especie</th>  <th>Lugar</th>   <th>Cantidade</th>  <th>Prezo</th> <th>Importe</th> </tr>";
+        datos.forEach((item) => {
+          table += filaTabla(item);
+        });
+        document.getElementById("resultado").innerHTML = table;
+      }
+
+      function mostrarInfoDatas(d1, d2) {
+        return `<ul> <li> Hora de inicio: ${d1.getHours()}:${d1.getMinutes()}:${d1.getSeconds()} -- Hora de fin:   ${d2.getHours()}:${d2.getMinutes()}:${d2.getSeconds()}</li> </ul>`;
+      }
+    </script>
+
+  </body>
+</html>

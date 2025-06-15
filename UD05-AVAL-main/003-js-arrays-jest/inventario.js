@@ -37,7 +37,7 @@ const ordenarPorPrezo = (inventario) => {
     
     return copia.sort((a,b) =>a.prezo-b.prezo);
     //Tenemos que pasarle a sort una funcion. En este caso compara los precios de dos productos.
-    
+    return [...inventario].sort((a,b)=>a.prezo-b.prezo);
 };
 
 //4. 

@@ -19,7 +19,7 @@ import Libro from "./clases/Libro.js"
 
 document.addEventListener("DOMContentLoaded", ()=> { //Cargamos la página
 
-  const contenedor = document.getElementById("contenedor"); //Obtenemos el contenedor
+  const contenedor = document.getElementById("contenedor"); //Obtenemos el elemento contenedor.
 
   const publicaciones = [
     new Libro("La novia gitana", "Carmen Mola",2018, "Novela"),

@@ -1,0 +1,58 @@
+<html lang="gl">
+<head>
+ <meta charset="UTF-8">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <title>Filtrado de Artigos</title>
+</head>
+<body>
+    <h1>Artigos</h1>
+    <label for="categorySelect">Filtrar por categoría:</label>
+        <select id="categorySelect">
+        <option value="">Todos</option>
+        <option value="tecnoloxia">Tecnoloxía</option>
+        <option value="deportes">Deportes</option>
+        <option value="cultura">Cultura</option>
+        </select>
+    <ul id="articlesList"></ul>
+
+    <script>
+        const articles = [
+        { id: 1, title: "Novo smartphone lanzado", category:
+        "tecnoloxia" },
+        { id: 2, title: "Fútbol: O clásico", category: "deportes" },
+        { id: 3, title: "O mellor museo de arte contemporáneo",
+        category: "cultura" },
+        { id: 4, title: "Intel lanza procesadores de nova xeración",
+        category: "tecnoloxia" },
+        { id: 5, title: "Maratón de Nova York", category: "deportes" },
+        ];
+        //TODO
+        //Recogemos la lista
+        const articlesList = document.getElementById("articlesList");
+        //Recogemos el select
+        const categorySelect = document.getElementById("categorySelect");
+
+        //Mostrar todo el contenido al cargar. se define la funcion más abajo.
+        showArticles(articles);
+
+        //filtrar por categoria
+        //1. le añadimos un evento al selector. que pase algo cunado seleccionamos
+        categorySelect.addEventListener("change", function(){
+            const selectedCategory =categorySelect.value;
+            //ESTA PARTE DEL CODIGO NO LA ENTIENDO
+            const filteredArticles = selectedCategory ?
+            articles.filter(article => article.category === selectedCategory) : articles;
+            showArticles(filteredArticles);
+        });
+
+        function showArticles (articles){
+            articlesList.innerHTML = ""; // Primero simepre limpiamos la lista de articulos
+            articles.forEach(articles => {
+                const listItem = document.createElement("li");
+                listItem.textContent = article.title;
+                articlesList.appendChild(listItem);                
+            });
+        }
+    </script>
+</body>
+</html>

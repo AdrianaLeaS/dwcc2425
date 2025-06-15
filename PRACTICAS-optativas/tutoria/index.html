@@ -1,0 +1,275 @@
+DWCC07-01
+--
+
+- [Tarefa: Programas que empregan mecanismos de comunicación asíncrona](#tarefa-programas-que-empregan-mecanismos-de-comunicación-asíncrona)
+  - [Código base do ficheiro XML](#código-base-do-ficheiro-xml)
+  - [O código HMTL de base](#o-código-hmtl-de-base)
+  - [Indicadores a avaliar](#indicadores-a-avaliar)
+- [Indicacións para a entrega](#indicacións-para-a-entrega)
+- [Prazo de entrega](#prazo-de-entrega)
+- [Elementos a cumprir.](#elementos-a-cumprir)
+- [Organización das prácticas](#organización-das-prácticas)
+
+
+# Tarefa: Programas que empregan mecanismos de comunicación asíncrona
+
+Dado o seguinte documento XML que contén unha carta de almorzos con tres variedades diferentes, modifica a páxina web dada para que realice unha petición AJAX por GET para consultar todas as variedades de almorzo e as mostre na páxina. O estilo en que se mostrarán na páxina é libre (exemplo na seguinte imaxe)
+
+![Interface](img/captura.png)
+
+Tes que desenvolver empregando XMLHttpRequest un aplicación que recupere o ficheiro XML e o presente na interface como se mostra na anterior imaxe. 
+
+## Código base do ficheiro XML 
+O código XML de base (carta_comidas_evaluacion1.xml) é o seguinte:
+
+```xml 
+<carta>
+    <desayuno>
+        <nombre>Gofres Belgas con froitas do bosque</nombre>
+        <precio>8.95</precio>
+        <descripcion>Lixeiros gofres belgas cubertos con froitas do bosque e nata montada</descripcion>
+        <calorias>900</calorias>
+    </desayuno>
+    <desayuno>
+        <nombre>Tostada Francesa</nombre>
+        <precio>4.50</precio>
+        <descripcion>Feitas co noso pan francés</descripcion>
+        <calorias>600</calorias>
+    </desayuno>
+    <desayuno>
+        <nombre>Almorzo da casa</nombre>
+        <precio>6.95</precio>
+        <descripcion>Dous ovos, touciño, salchicha, tostadas e patacas fritas</descripcion>
+        <calorias>950</calorias>
+    </desayuno>
+</carta>
+```
+
+## O código HMTL de base 
+O código HMTL de base é o seguinte:
+
+```html 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UD 7</title> 
+    <meta charset="utf-8">
+    <style>
+        table{
+            margin: 10px;
+            border : 1px solid black;
+            border-collapse: collapse;
+        }
+        th,td {
+            padding: 5px;
+            border : 1px solid black;
+        }
+    </style>       
+</head>
+<body>
+    <h1>Avaliación</h1>
+    <button type="button" onclick="solicitarCarta()">Carta de almorzos</button>
+    <table id="comidas"></table>
+    <script>
+        function solicitarCarta() {
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function (){
+               if( xhttp.readyState ==4 && this.status == 200){
+                    //A peticion foi procesada correctam,ente
+                    mostrarResultadoCarta(xhttp);
+                }
+            }
+
+            xhttp.open("GET", "carta.xml", true);
+            xhttp.send();
+        }
+
+        function mostrarResultadoCarta (xml) {
+            let xmlDoc = xml.responseXML;
+            let listaDesayunos = xmlDoc.getElementsByTagName("desayuno"); //Recuperamos co selector de tag todos os desayunos de xml
+
+            let tabla = "<tr><td> Nome </td></tr> <tr><td> Precio</td></tr> <tr><td> Descripcion</td></tr> <tr><td> Calorias</td></tr>";
+            //recorremos a lista e construimos a taboa
+            for (let i=0; i<listaDesayunos.length; i++) {
+                tabla += "<tr> <td>" + 
+                    listaDesayunos[i].getElementsByTagName("nombre")[0].childNodes[0].nodeValue + "</td> <td>"+
+                    listaDesayunos[i].getElementsByTagName("precio")[0].childNodes[0].nodeValue + "</td> <td>"+
+                    listaDesayunos[i].getElementsByTagName("descripcion")[0].childNodes[0].nodeValue + "</td> <td>"+
+                    listaDesayunos[i].getElementsByTagName("calorias")[0].childNodes[0].nodeValue + 
+                    " </td> </tr>"
+            }
+
+
+            document.getElementById("comidas").innerHTML = tabla;
+        }
+
+
+    </script>
+</body>
+</html>
+```
+
+
+
+## Indicadores a avaliar 
+
+
+| Indicador                                                                          | Puntuación máxima |
+|------------------------------------------------------------------------------------|-------------------|
+| Controla a petición AJAX que devolve os datos correctamente e sen erros.           | 1.5               |
+| Accede aos datos devoltos na petición AJAX e os trozea para mostrar na páxina web. | 2.5               |
+| Documenta e distribúe o código correctamente.                                      | 1                 |
+| Formula unha petición AJAX asíncrona.                                              | 2.5               |
+| Recupera datos simples procedentes dunha petición AJAX asíncrona.                  | 2.5               |
+
+# Indicacións para a entrega 
+Unha vez realizada a tarefa crearás un arquivo comprimido de **tipo zip** no cal adxuntes todos os problemas realizados. O envío realizarase a través da plataforma da forma establecida para iso, e o arquivo nomearase seguindo as seguintes pautas:
+
+> apelido1_apelido2_nome_SIGxx_Tarefa
+
+Asegúrate que o nome non conteña a letra ñ, acentos nin caracteres especiais estranos. Así por exemplo a alumna Begoña Sánchez Mañas para a primeira unidade do MP de DWEC, debería nomear esta tarefa como...
+> sanchez_manas_ begona_ DWCC7_Tarefa01
+
+# Prazo de entrega
+Ven indicado no buzón de entrega da plataforma de formación. 
+
+# Elementos a cumprir.
+Todos problemas, exercicios, tarefas, ... deben cumprir as seguintes características:
+- O código JavaScript debe atoparse separado do HTML nun ficheiro separado. 
+- O código desenvolto debe ser documentado. 
+- O código debe cumprir a especificación do enunciado. Se houber algunha dúbida ao respecto débese consultar co profesor. 
+- Si se comprobase que o alumno copiou parcialmente ou totalmente a puntuación será 0 puntos.
+- As tarefas que non cumpran coas indicacións do enunciado serán avaliadas con 0 puntos. 
+# Organización das prácticas
+Cada práctica organizarase nun directorio mantendo a xerarquía dos enunciados. Un exemplo desta xerarquía sería a seguinte: 
+```
+├───sanchez_manas_begona_DWCC7_Tarefa01
+   ├───problema01
+   ├───problema02
+   └───problema03
+   └───problema04
+```
+Consideracións nos nomeados:
+- As tarefas enuméranse con dous díxitos, por exemplo  problema01.  
+- O ficheiro html NOMEARASE igual que o nome do directorio que o alberga coa extensión html. 
+- O ficheiro js NOMEARASE igual que o nome do directorio que o alberga coa extensión js.DWCC07-01
+--
+
+- [Tarefa: Programas que empregan mecanismos de comunicación asíncrona](#tarefa-programas-que-empregan-mecanismos-de-comunicación-asíncrona)
+  - [Código base do ficheiro XML](#código-base-do-ficheiro-xml)
+  - [O código HMTL de base](#o-código-hmtl-de-base)
+  - [Indicadores a avaliar](#indicadores-a-avaliar)
+- [Indicacións para a entrega](#indicacións-para-a-entrega)
+- [Prazo de entrega](#prazo-de-entrega)
+- [Elementos a cumprir.](#elementos-a-cumprir)
+- [Organización das prácticas](#organización-das-prácticas)
+
+
+# Tarefa: Programas que empregan mecanismos de comunicación asíncrona
+
+Dado o seguinte documento XML que contén unha carta de almorzos con tres variedades diferentes, modifica a páxina web dada para que realice unha petición AJAX por GET para consultar todas as variedades de almorzo e as mostre na páxina. O estilo en que se mostrarán na páxina é libre (exemplo na seguinte imaxe)
+
+![Interface](img/captura.png)
+
+Tes que desenvolver empregando XMLHttpRequest un aplicación que recupere o ficheiro XML e o presente na interface como se mostra na anterior imaxe. 
+
+## Código base do ficheiro XML 
+O código XML de base (carta_comidas_evaluacion1.xml) é o seguinte:
+
+```xml 
+<carta>
+    <desayuno>
+        <nombre>Gofres Belgas con froitas do bosque</nombre>
+        <precio>8.95</precio>
+        <descripcion>Lixeiros gofres belgas cubertos con froitas do bosque e nata montada</descripcion>
+        <calorias>900</calorias>
+    </desayuno>
+    <desayuno>
+        <nombre>Tostada Francesa</nombre>
+        <precio>4.50</precio>
+        <descripcion>Feitas co noso pan francés</descripcion>
+        <calorias>600</calorias>
+    </desayuno>
+    <desayuno>
+        <nombre>Almorzo da casa</nombre>
+        <precio>6.95</precio>
+        <descripcion>Dous ovos, touciño, salchicha, tostadas e patacas fritas</descripcion>
+        <calorias>950</calorias>
+    </desayuno>
+</carta>
+```
+
+## O código HMTL de base 
+O código HMTL de base é o seguinte:
+
+```html 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UD 7</title> 
+    <meta charset="utf-8">
+    <style>
+        table{
+            margin: 10px;
+            border : 1px solid black;
+            border-collapse: collapse;
+        }
+        th,td {
+            padding: 5px;
+            border : 1px solid black;
+        }
+    </style>       
+</head>
+<body>
+    <h1>Avaliación</h1>
+    <button type="button" onclick="solicitarCarta()">Carta de almorzos</button>
+    <table id="comidas"></table>
+</body>
+</html>
+```
+
+
+
+## Indicadores a avaliar 
+
+
+| Indicador                                                                          | Puntuación máxima |
+|------------------------------------------------------------------------------------|-------------------|
+| Controla a petición AJAX que devolve os datos correctamente e sen erros.           | 1.5               |
+| Accede aos datos devoltos na petición AJAX e os trozea para mostrar na páxina web. | 2.5               |
+| Documenta e distribúe o código correctamente.                                      | 1                 |
+| Formula unha petición AJAX asíncrona.                                              | 2.5               |
+| Recupera datos simples procedentes dunha petición AJAX asíncrona.                  | 2.5               |
+
+# Indicacións para a entrega 
+Unha vez realizada a tarefa crearás un arquivo comprimido de **tipo zip** no cal adxuntes todos os problemas realizados. O envío realizarase a través da plataforma da forma establecida para iso, e o arquivo nomearase seguindo as seguintes pautas:
+
+> apelido1_apelido2_nome_SIGxx_Tarefa
+
+Asegúrate que o nome non conteña a letra ñ, acentos nin caracteres especiais estranos. Así por exemplo a alumna Begoña Sánchez Mañas para a primeira unidade do MP de DWEC, debería nomear esta tarefa como...
+> sanchez_manas_ begona_ DWCC7_Tarefa01
+
+# Prazo de entrega
+Ven indicado no buzón de entrega da plataforma de formación. 
+
+# Elementos a cumprir.
+Todos problemas, exercicios, tarefas, ... deben cumprir as seguintes características:
+- O código JavaScript debe atoparse separado do HTML nun ficheiro separado. 
+- O código desenvolto debe ser documentado. 
+- O código debe cumprir a especificación do enunciado. Se houber algunha dúbida ao respecto débese consultar co profesor. 
+- Si se comprobase que o alumno copiou parcialmente ou totalmente a puntuación será 0 puntos.
+- As tarefas que non cumpran coas indicacións do enunciado serán avaliadas con 0 puntos. 
+# Organización das prácticas
+Cada práctica organizarase nun directorio mantendo a xerarquía dos enunciados. Un exemplo desta xerarquía sería a seguinte: 
+```
+├───sanchez_manas_begona_DWCC7_Tarefa01
+   ├───problema01
+   ├───problema02
+   └───problema03
+   └───problema04
+```
+Consideracións nos nomeados:
+- As tarefas enuméranse con dous díxitos, por exemplo  problema01.  
+- O ficheiro html NOMEARASE igual que o nome do directorio que o alberga coa extensión html. 
+- O ficheiro js NOMEARASE igual que o nome do directorio que o alberga coa extensión js.

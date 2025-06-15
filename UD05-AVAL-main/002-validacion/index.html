@@ -49,29 +49,28 @@
         <!-- Validación de texto obrigatorio -->
         <div class="form-group">
             <label for="nome">Nome (obrigatorio):</label>
-            <!-- es requerido y validamos que haya texto entre 3 y 20 caracteres. Definimos el span del error para msotrar mensaje persnonalizada -->
-            <input type="text" id="nome"  name="nome"   placeholder="Introduce o teu nome" pattern="[A-Za-z\s]{3,20}" required> <span class="error" id="errornome"></span>
+            <!-- es requerido y validamos que haya texto entre 3 y 20 caracteres.-->
+            <input type="text" id="nome"  name="nome"   placeholder="Introduce o teu nome" pattern="[A-Za-z\s]{3,20}" required> 
         </div>
 
         <!-- Validación de correo electrónico -->
         <div class="form-group">
             <label for="email">Correo electrónico:</label>
-             <!-- Falta validación personalizada en Javascript -->
-            <input type="email" id="email" required name="email"  placeholder="Introduce o teu correo"><span class="error" id="errormail"></span>
+            <input type="email" id="email" required name="email"  placeholder="Introduce o teu correo">
         </div>
 
         <!-- Validación de contrasinal con lonxitude mínima -->
         <div class="form-group">
             <label for="password">Contrasinal (mínimo 8 caracteres):</label>
             <!-- En la expresion regular le digo que puede llevar mayusculas, minusculas y numeros. Ojo que le doy le minimo con el minlength-->
-            <input type="password" id="password" name="password"  placeholder="Crea unha contrasinal" size="8" minlength="8" pattern="[A-Za-z0-9]+"><span class="error" id="errorpasswd"></span>
+            <input type="password" id="password" name="password"  placeholder="Crea unha contrasinal" size="8" minlength="8" pattern="[A-Za-z0-9]+">
         </div>
 
         <!-- Validación de idade con rango -->
         <div class="form-group">
             <label for="idade">Idade (entre 18 e 99 anos):</label>
             <!-- Falta validación personalizada en Javascript -->
-            <input type="number" id="idade" name="idade"  min="18" max="99"><span class="error" id="erroridade"></span>
+            <input type="number" id="idade" name="idade"  min="18" max="99">
         </div>
 
     
@@ -80,7 +79,7 @@
         <div class="form-group">
             <label for="codigo">Código postal (formato: 12345):</label>
             <!-- Falta validación personalizada en Javascript -->
-            <input type="text" id="codigo" name="codigo"  placeholder="12345" pattern="[0-9]{5}"><span class="error" id="errorcodigo"></span>
+            <input type="text" id="codigo" name="codigo"  placeholder="12345" pattern="[0-9]{5}">
         </div>
 
         <!-- Selección obrigatoria -->
@@ -112,50 +111,68 @@
 
        document.addEventListener('DOMContentLoaded', function (){
 
-        var nome = document.getElementById("nome"); //Recojo el valor que me da el usuario
-        nome.oninvalid = function (event) { //Si el valor recogido es invalido que ejecute el evento que es lanzar el mensaje de error
-            var mensaje = "El campo nombre sólo admite letras y espacios entre 3 y 20 caracteres";
-            event.target.setCustomValidity(mensaje); // Le decimos al evento cual es el mensaje personalizado
-            event.target.value="";
-            //document.getElementById("nome").value=""; //Limpia la casilla ddespues de dar el error
-        }
+       // Las validaciones están hechas en el HTML. Aquí vamos a decir que pasa en cada evento invalid
+       
+       const form = document.getElementById("validationForm");
 
-        var mail = document.getElementById("email");
-        var patron = /^(?:\w+\.?)*$\w+@(?:\w+\.)+\w+$/;
-        patron.test(mail);
-        
-        mail.oninvalid = function  (event) {
-            mensaje = "Valor inválido apra un email";
-            event.target.setCustomValidity(mensaje);
-            
-            document.getElementById("email").value="";
-        }
+       const limparValidacion = () => {
+        const inputs = form.querySelectorAll("input, select, textarea"); // input son todos los input, select y textarea que recogemos en el form
+            inputs.forEach(input => { //Para cada uno de ellos setea customiza campo vacio"
+                input.setCustomValidity("");
+                
+            });
+       };
 
-        var contraseña = document.getElementById("contraseña");
-        function validarContraseña(event) {
-            var patron = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
-            mensaje = "La contraseña debe tener al menos 8 caracteres";
-            if(!patron.test(contraseña)) {
-                event.target.setCustomValidity(mensaje);
-
-            } else {
-                event.target.setCustomValidity("");
+       
+       form.querySelectorAll("input, select").forEach(input =>{
+        input.addEventListener("invalid", (event)=>{
+            const target = event.target;
+            switch(target.id){
+                case "nome":
+                    target.setCustomValidity("O nome é obrigatorio");
+                    break;
+                case "email":
+                    target.setCustomValidity("O email non e valido");
+                    break;
+                case "password":
+                    target.setCustomValidity("Debe ter unha llonxitude de 8 caracteres");
+                    break;
+                case "idade":
+                    target.setCustomValidity("A idade debe estar entre 18 e 99");
+                    break;
+                case "codigo":
+                    target.setCustomValidity("O codigo debe ter cinco dixitos");
+                    break;
+                case "xenero":
+                    target.setCustomValidity("Debe seleccionar un xenero");
+                    break;
+                case "termos":
+                    target.setCustomValidity("Debe aceptar os termos");
+                    break;
+                
             }
-        } 
+            
 
+        });
+        //Cada vez que meta un input quiero que el error desaparezca, en cada input le hago un evento que dice que en cada input customizo con espacion en blanco.
+        input.addEventListener("input", ()=>{
+            input.setCustomValidity("");
+        });
 
+       });
+         form.addEventListener("submit", (event)=>{
+            if(!form.checkValidity()){
+                event.preventDefault();
+                alert ('O formulario non e valido');
+            }
 
-
-
-
+         });
 
        });
        
        
-       //TODO 1: Crear unha función para validar o formulario 
-       //TODO 2: Crear unha función para mostrar mensaxes de erro
-       //TODO 3: Crear unha función para eliminar mensaxes de erroç
-     //.... 
+ 
+     
     </script>
 </body>
 </html>

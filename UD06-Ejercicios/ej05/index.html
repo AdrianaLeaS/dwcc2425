@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+ <meta charset="UTF-8">
+ <title>Formulario Dinámico</title>
+</head>
+<body>
+ <h2>Formulario de rexistro</h2>
+ <form id="form">
+ <label for="name">Nome:</label>
+ <input type="text" id="name" required><br>
+ <label for="age">Idade:</label>
+ <input type="number" id="age" required><br>
+ <label for="email">Correo electrónico:</label>
+ <input type="email" id="email" required><br>
+ <button type="submit">Enviar</button>
+ </form>
+ <h3>Usuarios rexistrados:</h3>
+ <ul id="userList"></ul>
+ <script>
+ // TODO: Crear a funcionalidade para engadir un novo usuario á lista
+
+const form = document.getElementById("form");
+
+
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    //OJO: AÑADIR ELEMENTOS A UNA LISTA, NO A UN DIV.
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const email = document.getElementById("email").value;
+    
+    const userList = document.getElementById("userList");
+    const newUser = document.createElement("li");
+
+    newUser.textContent =`Nome: ${name}, Idade: ${age}, Correo: ${email}`;
+
+    userList.appendChild(newUser);
+
+   
+    form.reset();
+});
+
+
+ </script>
+</body>
+</html>

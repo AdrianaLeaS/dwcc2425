@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+  <meta charset="UTF-8">
+  <title>Busca de Países - RestCountries API</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    #result { margin-top: 1.5rem; border: 1px solid #ccc; border-radius: 8px; padding: 1rem; width: 350px; }
+    img { max-width: 120px; border-radius: 4px; }
+    label { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Busca de Países (API RestCountries)</h1>
+  <label for="country">Nome do país:</label>
+  <input type="text" id="country" placeholder="Ex: Portugal">
+  <button onclick="buscarPais()">Buscar</button>
+
+  <div id="result"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

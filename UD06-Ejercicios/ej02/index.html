@@ -1,0 +1,65 @@
+<html lang="gl">
+<head>
+ <meta charset="UTF-8">
+ <title>Sistema de Comentarios</title>
+</head>
+<body>
+ <h1>Deixa un comentario</h1>
+ <form id="commentForm">
+ <input type="text" id="name" placeholder="O teu nome" required>
+ <textarea id="comment" placeholder="O teu comentario" required>
+</textarea>
+ <button type="submit">Enviar</button>
+ </form>
+ <div id="commentsSection"></div>
+ <script>
+    
+    
+    const form = document.getElementById("commentForm");
+    const commentsSection = document.getElementById("commentsSection");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Para evitar que se envie el formulario
+
+        //Obtener los datos del formulario
+        let nombre = document.getElementById("name").value;
+        let comentario = document.getElementById("comment").value;
+
+
+        //Crear lso elementos donde volcar los datos del formulario
+        let contedor = document.createElement("div");
+        let nameText = document.createElement("strong");
+        let commentText = document.createElement("p");
+        const boton = document.createElement("button");
+
+        //Añadir el contenido a la estructura creada
+        nameText.textContent = nombre;
+        commentText.textContent=comentario;
+        boton.textContent= "Eliminar";
+        boton.classList.add("delete-btn");
+
+        //En la solucion crea un div, y despues añade ese div a comentsSection. 
+        // SE PUEDE HACER ASÍ DIRECTAMENTE? si, pero si contenemos todo en un div
+        //a la hora de borrarlo podemos borrarlo directamente 
+        //sin ir haciendo removeChild por cada elemento
+        contedor.appendChild(nameText);
+        contedor.appendChild(commentText);
+        contedor.appendChild(boton);
+
+        commentsSection.appendChild(contedor);
+
+        form.reset();
+
+        boton.addEventListener("click", function(){
+            
+            commentsSection.removeChild(contedor);
+            //commentsSection.removeChild(nameText);
+            //commentsSection.removeChild(commentText);
+            //commentsSection.removeChild(boton);
+        });   
+    
+    });
+
+ </script>
+</body>
+</html>

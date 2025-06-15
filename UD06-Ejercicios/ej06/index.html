@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+ <meta charset="UTF-8">
+ <title>Táboa de Produtos</title>
+</head>
+<body>
+    <h2>Engadir un produto</h2>
+    <form id="productForm">
+        <label for="productName">Nome do produto:</label>
+        <input type="text" id="productName" required><br>
+        <label for="productPrice">Prezo:</label>
+        <input type="number" id="productPrice" required><br>
+        <label for="productDescription">Descrición:</label>
+        <input type="text" id="productDescription" required><br>
+        <button type="submit">Engadir produto</button>
+    </form>
+    <h3>Lista de produtos</h3>
+        <table id="productTable">
+                <thead>
+                <tr>
+                <th>Nome</th>
+                <th>Prezo</th>
+                <th>Descrición</th>
+                <th>Acción</th>
+                </tr>
+                </thead>
+    <tbody></tbody>
+    </table>
+
+    <script>
+    // TODO: Crear a funcionalidade para engadir e eliminar produto da táboa
+    const form = document.getElementById("productForm");
+    const boton = document.createElement("button");
+
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        const nome = document.getElementById("productName").value;
+        const precio = document.getElementById("productPrice").value;
+        const tipo = document.getElementById("productDescription").value;
+
+        const tabla = document.getElementById("productTable");
+
+        const nuevoProducto = document.createElement("");
+
+        nuevoProducto.textContent = 
+
+        boton.textContent = "Eliminar";
+        boton.classList.add("delete-btn");
+
+        boton.addEventListener("click", function (){
+            //falta el texto de remove: contenedor.removeChild(elemento);
+        });
+
+    }); 
+
+    </script>
+</body>
+</html>

@@ -17,11 +17,14 @@
     enlace.setAttribute("href", "https://www.novapagina.com");
     enlace.href = "https://www.novapagina.com";
 
-    //Problema2. SOLUCION:  y porque introduce el texto con createTextNode?
+    //Problema2. SOLUCION:  y porque introduce el texto con createTextNode? Se puede introducir de cualquiera de las dos maneras.
     let contedor = document.getElementById("contedor");
     let parrafo4 = document.createElement("p");
+    let textoParrafo4 = document.createTextNode("Benvido a miña paxina web2");
+    parrafo4.appendChild(textoParrafo4);
     contedor.appendChild(parrafo4);
-    parrafo4.innerHTML="Benvido a miña paxina web";
+    //parrafo4.innerHTML="Benvido a miña paxina web";
+    
     
     
     //Problema3

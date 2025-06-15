@@ -1,0 +1,20 @@
+<carta>
+    <desayuno>
+        <nombre>Gofres Belgas con froitas do bosque</nombre>
+        <precio>8.95</precio>
+        <descripcion>Lixeiros gofres belgas cubertos con froitas do bosque e nata montada</descripcion>
+        <calorias>900</calorias>
+    </desayuno>
+    <desayuno>
+        <nombre>Tostada Francesa</nombre>
+        <precio>4.50</precio>
+        <descripcion>Feitas co noso pan francés</descripcion>
+        <calorias>600</calorias>
+    </desayuno>
+    <desayuno>
+        <nombre>Almorzo da casa</nombre>
+        <precio>6.95</precio>
+        <descripcion>Dous ovos, touciño, salchicha, tostadas e patacas fritas</descripcion>
+        <calorias>950</calorias>
+    </desayuno>
+</carta>

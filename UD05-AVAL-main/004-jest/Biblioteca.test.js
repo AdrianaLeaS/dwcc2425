@@ -22,7 +22,7 @@ describe('Probas da función obterTitulosLibros', () => {
   describe('Probas da función calcularTotalCopias', () => {
     test('Debería devolver o total de copias de todos os libros na biblioteca', () => {
       const resultado = calcularTotalCopias(biblioteca);
-      expect(resultado) === 20;
+      expect(resultado).toBe(20);
     });
   });
 
